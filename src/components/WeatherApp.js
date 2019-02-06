@@ -10,7 +10,17 @@ class WeatherApp extends React.Component{
         city: undefined,
         country:undefined,
         temperature: undefined,
-        error : undefined
+        error : undefined,
+        today : undefined,
+        description:undefined,
+        icon:undefined,
+        humidity:undefined,
+        minTemp:undefined,
+        maxTemp:undefined
+    }
+
+    getTodaysDate(){
+
     }
     
 
@@ -37,7 +47,13 @@ class WeatherApp extends React.Component{
                 this.setState(() => ({
                     city : data.name,
                     country : data.sys.country,
-                    temperature: data.main.temp
+                    temperature: data.main.temp,
+                    today : this.getTodaysDate(),
+                    humidity: data.main.humidity,
+                    minTemp : data.main.temp_min,
+                    maxTemp : data.main.temp_max,
+                    description: data.weather[0].description,
+                    icon: data.weather[0].icon
                 }))
             }
 
@@ -52,9 +68,24 @@ class WeatherApp extends React.Component{
 
     }
 
+    getGradient(temp){
+        debugger
+        if(temp < 0)
+            return 'linear-gradient(to right, #3E5151 ,#DECBA4)';
+        else if (temp > 20 && temp <30)
+            return 'linear-gradient(to right, #6E86A1, #203543)';
+        else if (temp > 0 && temp < 20)
+            return 'linear-gradient(to right, #6E86A1, #203543)';
+        else if(temp > 30)
+            return 'linear-gradient(to right, #E94057, #F27121)';
+        else
+            return 'linear-gradient(to right, #5f2c82, #49a09d)';
+
+    }
+
     render(){
         return (
-            <div className="wrapper">
+            <div className="wrapper" style={{backgroundImage : this.getGradient(this.state.temperature)}}>
                <Header />
                <SearchForm getWeather={this.getWeather}/>
                <WeatherInfo 
@@ -62,6 +93,11 @@ class WeatherApp extends React.Component{
                     country ={this.state.country}
                     temperature ={this.state.temperature}
                     error ={this.state.error}
+                    description = {this.state.description}
+                    icon = {this.state.icon}
+                    humidity = {this.state.humidity}
+                    minTemp = {this.state.minTemp}
+                    maxTemp = {this.state.maxTemp}
                />
 
             </div>

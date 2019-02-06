@@ -4,7 +4,7 @@ import { Input, Button} from 'semantic-ui-react';
 class SearchForm extends React.Component{
 
     render(){
-        debugger
+        
         return (
             <div className="search-form">
                 <div className="form-container">
