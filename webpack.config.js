@@ -7,6 +7,9 @@ module.exports = {
         path : path.join(__dirname, 'public'), //this is the abs path on machine you want o/p of that webpack
         filename : 'bundle.js' 
     },
+    performance: {
+        hints: false
+    },
     module : {
         rules : [{
             loader : 'babel-loader',
