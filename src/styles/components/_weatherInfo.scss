@@ -1,5 +1,24 @@
 .weather-info-wrapper{
     height: 40rem;
-    max-width: 80rem;
+    max-width: 70rem;
     margin: 0 auto;
+}
+
+.weather-info__temperature{
+    font-size: 15rem;
+    color: #ebebeb;
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    height: 150px;
+    padding-top: 80px;
+    margin-bottom: 10rem;
+}
+
+.weather-info__description{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color : $off-white;
+    font-family : $header-font;
+    letter-spacing: 1px;
 }
