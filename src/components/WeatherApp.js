@@ -2,8 +2,10 @@ import React from 'react'
 import Header from './Header';
 import SearchForm from './SearchForm';
 import WeatherInfo from './WeatherInfo';
-import Config from '../../config/settings';
+// import Config from '../../config/settings';
 
+const API_KEY = `${process.env.API_KEY}`;
+debugger
 class WeatherApp extends React.Component{
 
     state = {
@@ -32,8 +34,8 @@ class WeatherApp extends React.Component{
         const country = e.target.elements.country.value.trim();
 
         if(city && country){
-            const apikey = Config['API_KEY'];
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${apikey}&units=metric`;
+            
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=metric`;
             const apiResponse = await fetch(url);
             const data = await apiResponse.json();
             debugger
