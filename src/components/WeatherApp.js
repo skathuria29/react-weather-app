@@ -28,7 +28,7 @@ class WeatherApp extends React.Component{
     
 
     getWeather = async(e)  => {
-        debugger
+        
         e.preventDefault();
         
         const country = e.target.elements[0].nextElementSibling.innerHTML.trim();
@@ -73,7 +73,7 @@ class WeatherApp extends React.Component{
     }
 
     getGradient(temp){
-        debugger
+        
         if(temp < 0)
             return 'linear-gradient(to right, #3E5151 ,#DECBA4)';
         else if (temp > 0 && temp < 20)
