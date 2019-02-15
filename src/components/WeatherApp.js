@@ -2,10 +2,11 @@ import React from 'react'
 import Header from './Header';
 import SearchForm from './SearchForm';
 import WeatherInfo from './WeatherInfo';
-// import Config from '../../config/settings';
+import Config from '../../config/settings';
 
-const API_KEY = `${process.env.API_KEY}`;
-debugger
+// const API_KEY = `${process.env.API_KEY}` || Config['API_KEY'];
+const API_KEY = Config['API_KEY'];
+
 class WeatherApp extends React.Component{
 
     state = {
@@ -27,18 +28,18 @@ class WeatherApp extends React.Component{
     
 
     getWeather = async(e)  => {
-        
+        debugger
         e.preventDefault();
         
-        const city = e.target.elements.city.value.trim();
-        const country = e.target.elements.country.value.trim();
+        const country = e.target.elements[0].nextElementSibling.innerHTML.trim();
+        const city = e.target.elements[1].nextElementSibling.innerHTML.trim();
 
         if(city && country){
             
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=metric`;
             const apiResponse = await fetch(url);
             const data = await apiResponse.json();
-            debugger
+            
             if(data.cod === "404"){
                 //data not found
                 this.setState(()=> ({
