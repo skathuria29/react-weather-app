@@ -7,7 +7,7 @@
 .weather-info__temperature{
     font-size: 15rem;
     color: #ebebeb;
-    font-family: 'Lato', sans-serif;
+    font-family: $number-font;
     text-align: center;
     height: 150px;
     padding-top: 80px;
@@ -26,4 +26,6 @@
 .error-message{
     text-align: center;
     font-size: $l-size;
+    font-family: $header-font;
+    color: $off-white;
 }

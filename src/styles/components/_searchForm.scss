@@ -1,8 +1,9 @@
 
 
-.search-form {
+.search-form-wrapper {
     max-width: 65rem;
     margin: 0 auto;
+    margin-bottom: 5rem;
 }
 
 .form-container{
@@ -10,32 +11,42 @@
 }
 
 .search-form__item{
-    margin: 0 2rem 2rem 0;
+    max-width: 20rem;
 }
 
-.search-form__item input[type="text"]{
-    background: inherit;
-    border: none;
-    border-bottom: 2px solid $light-gray;
-    border-radius: 0px;
-    color: #fff;
+.search-form{
+    display:flex;
+    justify-content: space-between;
 }
 
-.search-form__item input[type="text"]:focus{
-    background: inherit;
-    border: none;
-    border-bottom: 2px solid $light-gray;
-    border-radius: 0px;
-    color: #fff;
-}
-
-.search-form__item input[type="text"]:focus::-webkit-input-placeholder{
-    color : lightgrey;
+.ui.selection.dropdown .menu>.item{
+    font-size: 1.4rem;
 }
 
 .search-form__item.btn{
     font-size: $m-size;
     margin : 0 2rem;
+}
+
+
+.ui.search.search-form__item ,  
+    .ui.search.search-form__item:hover,
+    .ui.search.search-form__item:focus,
+    .ui.search.search-form__item::selection{
+    background: inherit;
+    border: none;
+    border-bottom: 2px solid $light-gray;
+    border-radius: 0px;
+    color: $off-white;
+    box-shadow: none;
+}
+
+.ui.search.search-form__item input{
+    color: $off-white;
+}
+
+.ui.selection.visible.dropdown>.text:not(.default){
+    color: $off-white;
 }
 
 input:-webkit-autofill,
@@ -49,13 +60,13 @@ input:-webkit-autofill:active {
 @keyframes autofill {
     100% {
         background: transparent;
-        color: white;
+        color: $off-white;
     }
 }
 
 @-webkit-keyframes autofill {
     100% {
         background: transparent;
-        color: white;
+        color: $off-white;
     }
 }
