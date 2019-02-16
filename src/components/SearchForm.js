@@ -1,7 +1,6 @@
 import React from 'react';
-import { Input, Button, Dropdown } from 'semantic-ui-react';
+import { Button, Dropdown } from 'semantic-ui-react';
 
-const JSON_DATA = require('../../config/countries.json');
 const RAPID_API_KEY = `${process.env.RAPID_API_KEY}`;
 
 class SearchForm extends React.Component {
@@ -9,18 +8,6 @@ class SearchForm extends React.Component {
     state = {
         countries: [],
         cities: []
-    }
-
-    getJSONCountryOptions() {
-        
-        const countries = Object.keys(JSON_DATA);
-        const countOptions = countries.map((item) => ({ key: item, value: item, text: item }));
-        return countOptions;
-    }
-
-    getJSONCityOptions() {
-        
-
     }
 
     getCountryOptions = async () => {
@@ -41,7 +28,7 @@ class SearchForm extends React.Component {
         }
         else {
             this.setState(() => ({
-                countries: this.getJSONCountryOptions()
+                error : 'Data Not Found'
             }))
         }
     }
@@ -64,7 +51,7 @@ class SearchForm extends React.Component {
         }
         else {
             this.setState(() => ({
-                cities: this.getJSONCountryOptions()
+                error: 'Data Not Found'
             }))
         }
     }
@@ -73,22 +60,13 @@ class SearchForm extends React.Component {
         this.getCountryOptions();
     }
 
-    handleCityChange = (e, data) => {
-        if (data.value) {
-            // this.props.city = data.value;
-        }
-    }
-
     handleCountryChange = (e, data) => {
-        
         if (data.value) {
             const countryCode = data.value.trim();
             // this.props.country = data.value;
             this.getCityOptions(countryCode);
 
         }
-
-
     }
 
     render() {
@@ -108,6 +86,3 @@ class SearchForm extends React.Component {
 }
 
 export default SearchForm;
-
-// <Input name="city" className="search-form__item" placeholder='City' />
-// <Input name="country" className="search-form__item" placeholder='Country' />
