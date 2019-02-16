@@ -1,84 +1,42 @@
 import React from 'react';
-import { Button, Dropdown } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
+import Script from 'react-load-script';
 
-const RAPID_API_KEY = `${process.env.RAPID_API_KEY}`;
-
+const GEO_APIKEY = `${process.env.GEO_APIKEY}`;
+const GEO_API = "https://maps.googleapis.com/maps/api/js?key=" + GEO_APIKEY +"&libraries=places,geometry"
+debugger
 class SearchForm extends React.Component {
 
-    state = {
-        countries: [],
-        cities: []
+    handleScriptLoad = () => {
+
+        var options = { types: ['(cities)'] };
+
+        // Initialize Google Autocomplete 
+        /*global google*/
+        this.autocomplete = new google.maps.places.Autocomplete( document.getElementById('autocomplete'), options);
+        // Fire Event when a suggested name is selected
+        this.autocomplete.addListener('place_changed',this.handlePlaceChanged.bind(this));
     }
 
-    getCountryOptions = async () => {
-        
-        const getCountriesURL = "https://wft-geo-db.p.rapidapi.com/v1/geo/countries?limit=250";
-        const apiResponse = await fetch(getCountriesURL, {
-            headers: {
-                "X-RapidAPI-Key": RAPID_API_KEY
-            }
-        });
-
-        if (apiResponse.status === 200) {
-            const apiData = await apiResponse.json();
-            const countriesOptionsData = apiData.data.map((item) => ({ key: item.code, value: item.wikiDataId, text: item.name }));
-            this.setState(() => ({
-                countries: countriesOptionsData
-            }))
-        }
-        else {
-            this.setState(() => ({
-                error : 'Data Not Found'
-            }))
-        }
+    handlePlaceChanged(obj) {
+        debugger
+        const place = this.autocomplete.getPlace();
+        if(place && place.formatted_address)
+            this.props.getWeather(place);
+        else
+            this.props.getWeather();
     }
 
-    getCityOptions = async (code) => {
-        
-        const getCountryCitiesURL = `https://wft-geo-db.p.rapidapi.com/v1/geo/countries/${code}/regions?limit=100`
-        const apiResponse = await fetch(getCountryCitiesURL, {
-            headers: {
-                "X-RapidAPI-Key": RAPID_API_KEY
-            }
-        });
-        if (apiResponse.status === 200) {
-            const apiData = await apiResponse.json();
-            
-            const citiesOptionsData = apiData.data.map((item) => ({ key: item.isoCode, value: item.name, text: item.name }));
-            this.setState(() => ({
-                cities: citiesOptionsData
-            }))
-        }
-        else {
-            this.setState(() => ({
-                error: 'Data Not Found'
-            }))
-        }
-    }
 
-    componentDidMount() {
-        this.getCountryOptions();
-    }
-
-    handleCountryChange = (e, data) => {
-        if (data.value) {
-            const countryCode = data.value.trim();
-            // this.props.country = data.value;
-            this.getCityOptions(countryCode);
-
-        }
-    }
 
     render() {
-
+        debugger
         return (
+
             <div className="search-form-wrapper">
+                <Script url={GEO_API} onLoad={this.handleScriptLoad} />
                 <div className="form-container">
-                    <form onSubmit={this.props.getWeather} className="search-form">
-                        <Dropdown onChange={this.handleCountryChange} name="country" className="search-form__item" placeholder="Select Country" fluid search selection options={this.state.countries} />
-                        <Dropdown name="city" className="search-form__item" placeholder="Select City" fluid search selection options={this.state.cities} />
-                        <Button className="search-form__item btn" content='Get Weather' />
-                    </form>
+                    <Input className="search-form__item" id="autocomplete" />
                 </div>
             </div>
         )

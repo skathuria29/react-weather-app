@@ -4,7 +4,6 @@ import SearchForm from './SearchForm';
 import WeatherInfo from './WeatherInfo';
 import Config from '../../config/settings';
 
-// const API_KEY = `${process.env.API_KEY}` || Config['API_KEY'];
 const API_KEY = Config['API_KEY'];
 
 class WeatherApp extends React.Component{
@@ -27,15 +26,12 @@ class WeatherApp extends React.Component{
     }
     
 
-    getWeather = async(e)  => {
-        
-        e.preventDefault();
-        
-        const country = e.target.elements[0].nextElementSibling.innerHTML.trim();
-        const city = e.target.elements[1].nextElementSibling.innerHTML.trim();
-
-        if(city && country){
-            
+    getWeather = async(place) =>{
+        if(place){
+            place = place.formatted_address.split(",");
+            const city = place[0].trim();
+            const country = place[place.length - 1].trim();
+    
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&APPID=${API_KEY}&units=metric`;
             const apiResponse = await fetch(url);
             const data = await apiResponse.json();
@@ -64,8 +60,8 @@ class WeatherApp extends React.Component{
         }
         else{
 
-            this.setState(()=> ({
-                error : 'Enter Input Values'
+            this.setState(()  => ({
+                error : 'Data Not Found'
             }))
         }
            

@@ -11,7 +11,7 @@
 }
 
 .search-form__item{
-    max-width: 20rem;
+    width: 100%;
 }
 
 .search-form{
@@ -69,4 +69,24 @@ input:-webkit-autofill:active {
         background: transparent;
         color: $off-white;
     }
+}
+
+.search-form__item input[type="text"]{
+    background: inherit;
+    border: none;
+    border-bottom: 2px solid $light-gray;
+    border-radius: 0px;
+    color: #fff;
+}
+
+.search-form__item input[type="text"]:focus{
+    background: inherit;
+    border: none;
+    border-bottom: 2px solid $light-gray;
+    border-radius: 0px;
+    color: #fff;
+}
+
+.search-form__item input[type="text"]:focus::-webkit-input-placeholder{
+    color : lightgrey;
 }
